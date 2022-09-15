@@ -8,13 +8,13 @@ public class InternalFunction
 
     public int Degree { get; }
 
-    public double A { get; set; }
+    public double? A { get; set; }
 
-    public double B { get; set; }
+    public double? B { get; set; }
 
-    public double C { get; set; }
+    public double? C { get; set; }
 
-    public List<Coordinates> CoordinatesList { get; set; }
+    public List<Arguments> CoordinatesList { get; set; }
 
     #endregion
 
@@ -22,8 +22,17 @@ public class InternalFunction
 
     public InternalFunction(FunctionDegree degree)
     {
-        CoordinatesList = new List<Coordinates>();
+        CoordinatesList = new List<Arguments>();
         Degree = (int)degree;
+    }
+
+    #endregion
+
+    #region Methods
+
+    public bool AreCoefficientsSet()
+    {
+        return A.HasValue && B.HasValue && C.HasValue;
     }
 
     #endregion
