@@ -2,22 +2,64 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-public class InternalFunction
+public class InternalFunction : INotifyPropertyChanged
 {
+    #region Fields
+
+    private double? _a;
+    private double? _b;
+    private double? _c;
+
+    #endregion
+
     #region Properties
 
     public int Degree { get; }
 
-    public double? A { get; set; }
+    public double? A
+    {
+        get => _a;
+        set
+        {
+            _a = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public double? B { get; set; }
+    public double? B
+    {
+        get => _b;
+        set
+        {
+            _b = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public double? C { get; set; }
+    public double? C
+    {
+        get => _c;
+        set
+        {
+            _c = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public List<Arguments> CoordinatesList { get; set; }
+    public ObservableCollection<Arguments> CoordinatesList { get; set; }
 
     public List<double> AvailableCoefficientsC { get; }
+
+    #endregion
+
+    #region Events
+
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     #endregion
 
@@ -25,7 +67,8 @@ public class InternalFunction
 
     public InternalFunction(FunctionDegree degree)
     {
-        CoordinatesList = new List<Arguments>();
+        CoordinatesList = new ObservableCollection<Arguments>();
+        CoordinatesList.CollectionChanged += OnCoordinateListChanged;
         Degree = (int)degree;
         AvailableCoefficientsC = new List<double>
         {
@@ -44,6 +87,54 @@ public class InternalFunction
     public bool AreCoefficientsSet()
     {
         return A.HasValue && B.HasValue && C.HasValue;
+    }
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void OnCoordinateListChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                if (e.NewItems != null)
+                {
+                    foreach (object item in e.NewItems)
+                    {
+                        if (item is not Arguments arguments)
+                        {
+                            continue;
+                        }
+
+                        arguments.PropertyChanged += OnArgumentsChanged;
+                    }
+                }
+
+                break;
+
+            case NotifyCollectionChangedAction.Remove:
+                if (e.OldItems != null)
+                {
+                    foreach (object item in e.OldItems)
+                    {
+                        if (item is not Arguments arguments)
+                        {
+                            continue;
+                        }
+
+                        arguments.PropertyChanged -= OnArgumentsChanged;
+                    }
+                }
+
+                break;
+        }
+    }
+
+    private void OnArgumentsChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(e.PropertyName);
     }
 
     #endregion

@@ -49,7 +49,9 @@ public class MainViewModel : INotifyPropertyChanged
 
         for (int i = 1; i < 6; i++)
         {
-            Functions.Add(new InternalFunction((FunctionDegree)i));
+            var function = new InternalFunction((FunctionDegree)i);
+            function.PropertyChanged += OnArgumentChanged;
+            Functions.Add(function);
         }
 
         _selectedFunction = Functions.First();
@@ -62,6 +64,22 @@ public class MainViewModel : INotifyPropertyChanged
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private void OnArgumentChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (sender is not InternalFunction function)
+        {
+            return;
+        }
+
+        if (e.PropertyName == nameof(Arguments.Result))
+        {
+            return;
+        }
+
+        _calculationService.Calculate(function);
+        OnPropertyChanged(e.PropertyName);
     }
 
     #endregion

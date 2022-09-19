@@ -1,42 +1,63 @@
 ﻿namespace NeoStackTextApp.Models;
 
-public class Arguments
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+public class Arguments : INotifyPropertyChanged
 {
     #region Fields
 
-    private static uint _id;
+    private double? _x;
+    private double? _y;
+    private double? _result;
 
     #endregion
 
     #region Properties
 
-    public uint Id { get; }
+    public double? X
+    {
+        get => _x;
+        set
+        {
+            _x = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public double? X { get; set; }
+    public double? Y
+    {
+        get => _y;
+        set
+        {
+            _y = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public double? Y { get; set; }
-
-    public double? Result { get; set; }
+    public double? Result
+    {
+        get => _result;
+        set
+        {
+            _result = value;
+            OnPropertyChanged();
+        }
+    }
 
     #endregion
 
-    #region Constructors
+    #region Events
 
-    public Arguments(double? x, double? y)
-        : this()
-    {
-        X = x;
-        Y = y;
-    }
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    public Arguments()
-    {
-        Id = _id++;
-    }
+    #endregion
 
-    static Arguments()
+    #region Methods
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
-        _id = 0;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     #endregion

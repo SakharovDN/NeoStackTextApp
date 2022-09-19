@@ -46,11 +46,12 @@
             <ComboBox Grid.Row="2" ItemsSource="{Binding SelectedFunction.AvailableCoefficientsC}"
                       SelectedItem="{Binding SelectedFunction.C, Mode=TwoWay}" />
         </Grid>
-        <DataGrid Grid.Column="2" AutoGenerateColumns="False" CanUserAddRows="True"  ItemsSource="{Binding SelectedFunction.CoordinatesList}">
+        <DataGrid Grid.Column="2" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                  ItemsSource="{Binding SelectedFunction.CoordinatesList}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="x" Binding="{Binding X, Mode=TwoWay}" Width="*" IsReadOnly="False" />
                 <DataGridTextColumn Header="y" Binding="{Binding Y, Mode=TwoWay}" Width="*" IsReadOnly="False" />
-                <DataGridTextColumn Header="f(x,y)" Binding="{Binding Result}" Width="*" IsReadOnly="True" />
+                <DataGridTextColumn Header="f(x,y)" Binding="{Binding Result, Mode=TwoWay}" Width="*" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
