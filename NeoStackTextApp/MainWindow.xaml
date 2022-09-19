@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeoStackTextApp"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel}"
         mc:Ignorable="d"
         Title="NeoStackTestApp" Height="450" Width="800" MinWidth="450" MinHeight="800"
         WindowStartupLocation="CenterScreen">
@@ -14,8 +15,19 @@
             <ColumnDefinition Width="50*" />
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
-            <ListBox SelectedItem="" BorderThickness="1,0,0,1" BorderBrush="LightGray">
-                ItemsSource="{Binding MainViewModel.Functions}"
+            <ListBox ItemsSource="{Binding Functions}" SelectedItem="{Binding SelectedFunction, Mode=TwoWay}"
+                     BorderThickness="1,1,1,1" BorderBrush="Black">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="0,5">
+                            <TextBlock Text="{Binding Path=Degree, Converter={StaticResource EnumConverter}}"
+                                       FontSize="14"
+                                       FontFamily="Arial"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="2,0,0,0" />
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </DockPanel>
         <Grid Grid.Column="1">
@@ -26,13 +38,20 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
-                <TextBox Text="{Binding CoefficientA}" />
+                <TextBox Text="{Binding SelectedFunction.A, Mode=TwoWay}" />
             </DockPanel>
             <DockPanel Grid.Row="1">
-                <TextBox Text="{Binding CoefficientB}" />
+                <TextBox Text="{Binding SelectedFunction.B, Mode=TwoWay}" />
             </DockPanel>
-            <ComboBox Grid.Row="2" />
+            <ComboBox Grid.Row="2" ItemsSource="{Binding SelectedFunction.AvailableCoefficientsC}"
+                      SelectedItem="{Binding SelectedFunction.C, Mode=TwoWay}" />
         </Grid>
-        <DataGrid Grid.Column="2" />
+        <DataGrid Grid.Column="2" AutoGenerateColumns="False" CanUserAddRows="True"  ItemsSource="{Binding SelectedFunction.CoordinatesList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="x" Binding="{Binding X, Mode=TwoWay}" Width="*" IsReadOnly="False" />
+                <DataGridTextColumn Header="y" Binding="{Binding Y, Mode=TwoWay}" Width="*" IsReadOnly="False" />
+                <DataGridTextColumn Header="f(x,y)" Binding="{Binding Result}" Width="*" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -22,11 +22,16 @@ public class Arguments
 
     #region Constructors
 
-    public Arguments(double x, double y)
+    public Arguments(double? x, double? y)
+        : this()
     {
-        Id = _id++;
         X = x;
         Y = y;
+    }
+
+    public Arguments()
+    {
+        Id = _id++;
     }
 
     static Arguments()
