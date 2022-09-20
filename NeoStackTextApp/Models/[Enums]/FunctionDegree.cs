@@ -2,6 +2,9 @@
 
 using System.ComponentModel;
 
+/// <summary>
+/// Function degree
+/// </summary>
 public enum FunctionDegree
 {
     [Description("Функция первой степени")]

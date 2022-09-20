@@ -9,6 +9,9 @@ using Models;
 
 using Services;
 
+/// <summary>
+/// Main view model
+/// </summary>
 public class MainViewModel : INotifyPropertyChanged
 {
     #region Constants
@@ -28,6 +31,9 @@ public class MainViewModel : INotifyPropertyChanged
 
     #region Properties
 
+    /// <summary>
+    /// Selected function in function ListView
+    /// </summary>
     public InternalFunction SelectedFunction
     {
         get => _selectedFunction;
@@ -38,6 +44,9 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Collection of functions
+    /// </summary>
     public ObservableCollection<InternalFunction> Functions { get; }
     
     #endregion
@@ -58,7 +67,7 @@ public class MainViewModel : INotifyPropertyChanged
         for (int i = MIN_DEGREE; i <= MAX_DEGREE; i++)
         {
             var function = new InternalFunction(i);
-            function.PropertyChanged += OnArgumentChanged;
+            function.PropertyChanged += OnFunctionPropertyChanged;
             Functions.Add(function);
         }
 
@@ -69,12 +78,21 @@ public class MainViewModel : INotifyPropertyChanged
 
     #region Methods
 
+    /// <summary>
+    /// Triggered on property changed
+    /// </summary>
+    /// <param name="propertyName">Name of changed property</param>
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private void OnArgumentChanged(object? sender, PropertyChangedEventArgs e)
+    /// <summary>
+    /// Triggered on function property changed
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void OnFunctionPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (sender is not InternalFunction function)
         {

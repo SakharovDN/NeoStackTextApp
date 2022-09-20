@@ -38,7 +38,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
-                <TextBox Text="{Binding SelectedFunction.CoefficientA, Mode=TwoWay}" PreviewTextInput="{}"/>
+                <TextBox Text="{Binding SelectedFunction.CoefficientA, Mode=TwoWay}" />
             </DockPanel>
             <DockPanel Grid.Row="1">
                 <TextBox Text="{Binding SelectedFunction.CoefficientB, Mode=TwoWay}" />

@@ -9,10 +9,21 @@ using System.Windows.Data;
 
 using Models;
 
+/// <summary>
+/// Converter for  displaying function names
+/// </summary>
 public class EnumConverter : IValueConverter
 {
     #region Methods
 
+    /// <summary>
+    /// Convert int value to description of <see cref="FunctionDegree"/> value
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns>Description of <see cref="FunctionDegree"/> value</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value is int ? GetDescription((FunctionDegree)value) : DependencyProperty.UnsetValue;
@@ -23,19 +34,24 @@ public class EnumConverter : IValueConverter
         return value;
     }
 
-    private static string GetDescription(Enum en)
+    /// <summary>
+    /// Get description of <see cref="Enum"/> value
+    /// </summary>
+    /// <param name="enumValue"></param>
+    /// <returns></returns>
+    private static string GetDescription(Enum enumValue)
     {
-        Type type = en.GetType();
-        MemberInfo[] memInfo = type.GetMember(en.ToString());
+        Type type = enumValue.GetType();
+        MemberInfo[] memInfo = type.GetMember(enumValue.ToString());
 
         if (memInfo.Length <= 0)
         {
-            return en.ToString();
+            return enumValue.ToString();
         }
 
         object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 
-        return attrs.Length > 0 ? ((DescriptionAttribute)attrs[0]).Description : en.ToString();
+        return attrs.Length > 0 ? ((DescriptionAttribute)attrs[0]).Description : enumValue.ToString();
     }
 
     #endregion

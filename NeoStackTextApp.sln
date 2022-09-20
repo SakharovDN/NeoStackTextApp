@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoStackTextApp", "NeoStackTextApp\NeoStackTextApp.csproj", "{38585CF1-429B-4811-A17F-40934EFEEA53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoStackTextApp", "NeoStackTextApp\NeoStackTextApp.csproj", "{38585CF1-429B-4811-A17F-40934EFEEA53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2B79F83D-8004-4D78-87D4-227837890A24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{38585CF1-429B-4811-A17F-40934EFEEA53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38585CF1-429B-4811-A17F-40934EFEEA53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38585CF1-429B-4811-A17F-40934EFEEA53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B79F83D-8004-4D78-87D4-227837890A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B79F83D-8004-4D78-87D4-227837890A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B79F83D-8004-4D78-87D4-227837890A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B79F83D-8004-4D78-87D4-227837890A24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

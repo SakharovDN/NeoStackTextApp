@@ -3,6 +3,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+/// <summary>
+/// Arguments of function
+/// </summary>
 public class Arguments : INotifyPropertyChanged
 {
     #region Fields
@@ -15,6 +18,9 @@ public class Arguments : INotifyPropertyChanged
 
     #region Properties
 
+    /// <summary>
+    /// X coordinate
+    /// </summary>
     public double? X
     {
         get => _x;
@@ -25,6 +31,9 @@ public class Arguments : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Y coordinate
+    /// </summary>
     public double? Y
     {
         get => _y;
@@ -35,6 +44,9 @@ public class Arguments : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Calculation result
+    /// </summary>
     public double? Result
     {
         get => _result;
@@ -54,7 +66,11 @@ public class Arguments : INotifyPropertyChanged
     #endregion
 
     #region Methods
-
+    
+    /// <summary>
+    /// Triggered on property changed
+    /// </summary>
+    /// <param name="propertyName">Name of changed property</param>
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

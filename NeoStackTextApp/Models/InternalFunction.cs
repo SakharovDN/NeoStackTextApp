@@ -8,6 +8,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
+/// <summary>
+/// Internal function
+/// </summary>
 public class InternalFunction : INotifyPropertyChanged
 {
     #region Fields
@@ -20,8 +23,14 @@ public class InternalFunction : INotifyPropertyChanged
 
     #region Properties
 
+    /// <summary>
+    /// Function degree
+    /// </summary>
     public int Degree { get; }
 
+    /// <summary>
+    /// Coefficient A
+    /// </summary>
     public double? CoefficientA
     {
         get => _coefficientA;
@@ -32,6 +41,9 @@ public class InternalFunction : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Coefficient B
+    /// </summary>
     public double? CoefficientB
     {
         get => _coefficientB;
@@ -42,6 +54,9 @@ public class InternalFunction : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Coefficient C
+    /// </summary>
     public double? CoefficientC
     {
         get => _coefficientC;
@@ -52,8 +67,14 @@ public class InternalFunction : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// List of arguments
+    /// </summary>
     public ObservableCollection<Arguments> ArgumentsList { get; set; }
 
+    /// <summary>
+    /// Available C coefficients
+    /// </summary>
     public List<double> AvailableCoefficientsC { get; }
 
     #endregion
@@ -85,16 +106,29 @@ public class InternalFunction : INotifyPropertyChanged
 
     #region Methods
 
+    /// <summary>
+    /// Check if all coefficients are set
+    /// </summary>
+    /// <returns>Returns true if all coefficients are set, otherwise returns false</returns>
     public bool AreCoefficientsSet()
     {
         return CoefficientA.HasValue && CoefficientB.HasValue && CoefficientC.HasValue;
     }
 
+    /// <summary>
+    /// Triggered on property changed
+    /// </summary>
+    /// <param name="propertyName">Name of changed property</param>
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    /// <summary>
+    /// Triggered on argument list changed
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnArgumentsListChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         switch (e.Action)
@@ -133,6 +167,11 @@ public class InternalFunction : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Triggered on argument changed
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OnArgumentsChanged(object? sender, PropertyChangedEventArgs e)
     {
         OnPropertyChanged(e.PropertyName);

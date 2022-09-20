@@ -4,10 +4,17 @@ using System;
 
 using Models;
 
+/// <summary>
+/// Calculation service
+/// </summary>
 public class CalculationService
 {
     #region Methods
 
+    /// <summary>
+    /// Calculate result of function
+    /// </summary>
+    /// <param name="function">Calculated function</param>
     public void Calculate(InternalFunction function)
     {
         if (!function.AreCoefficientsSet())
