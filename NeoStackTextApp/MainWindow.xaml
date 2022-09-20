@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NeoStackTextApp"
         d:DataContext="{d:DesignInstance Type=local:MainViewModel}"
         mc:Ignorable="d"
-        Title="NeoStackTestApp" Height="450" Width="800" MinWidth="450" MinHeight="800"
+        Title="NeoStackTestApp" Height="450" Width="800" MinWidth="800" MinHeight="800"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,16 +38,16 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
-                <TextBox Text="{Binding SelectedFunction.A, Mode=TwoWay}" />
+                <TextBox Text="{Binding SelectedFunction.CoefficientA, Mode=TwoWay}" PreviewTextInput="{}"/>
             </DockPanel>
             <DockPanel Grid.Row="1">
-                <TextBox Text="{Binding SelectedFunction.B, Mode=TwoWay}" />
+                <TextBox Text="{Binding SelectedFunction.CoefficientB, Mode=TwoWay}" />
             </DockPanel>
             <ComboBox Grid.Row="2" ItemsSource="{Binding SelectedFunction.AvailableCoefficientsC}"
-                      SelectedItem="{Binding SelectedFunction.C, Mode=TwoWay}" />
+                      SelectedItem="{Binding SelectedFunction.CoefficientC, Mode=TwoWay}" />
         </Grid>
         <DataGrid Grid.Column="2" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True"
-                  ItemsSource="{Binding SelectedFunction.CoordinatesList}">
+                  ItemsSource="{Binding SelectedFunction.ArgumentsList}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="x" Binding="{Binding X, Mode=TwoWay}" Width="*" IsReadOnly="False" />
                 <DataGridTextColumn Header="y" Binding="{Binding Y, Mode=TwoWay}" Width="*" IsReadOnly="False" />

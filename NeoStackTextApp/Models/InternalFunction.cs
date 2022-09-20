@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 public class InternalFunction : INotifyPropertyChanged
 {
     #region Fields
 
-    private double? _a;
-    private double? _b;
-    private double? _c;
+    private double? _coefficientA;
+    private double? _coefficientB;
+    private double? _coefficientC;
 
     #endregion
 
@@ -21,37 +22,37 @@ public class InternalFunction : INotifyPropertyChanged
 
     public int Degree { get; }
 
-    public double? A
+    public double? CoefficientA
     {
-        get => _a;
+        get => _coefficientA;
         set
         {
-            _a = value;
+            _coefficientA = value;
             OnPropertyChanged();
         }
     }
 
-    public double? B
+    public double? CoefficientB
     {
-        get => _b;
+        get => _coefficientB;
         set
         {
-            _b = value;
+            _coefficientB = value;
             OnPropertyChanged();
         }
     }
 
-    public double? C
+    public double? CoefficientC
     {
-        get => _c;
+        get => _coefficientC;
         set
         {
-            _c = value;
+            _coefficientC = value;
             OnPropertyChanged();
         }
     }
 
-    public ObservableCollection<Arguments> CoordinatesList { get; set; }
+    public ObservableCollection<Arguments> ArgumentsList { get; set; }
 
     public List<double> AvailableCoefficientsC { get; }
 
@@ -65,19 +66,19 @@ public class InternalFunction : INotifyPropertyChanged
 
     #region Constructors
 
-    public InternalFunction(FunctionDegree degree)
+    public InternalFunction(int degree)
     {
-        CoordinatesList = new ObservableCollection<Arguments>();
-        CoordinatesList.CollectionChanged += OnCoordinateListChanged;
-        Degree = (int)degree;
-        AvailableCoefficientsC = new List<double>
+        ArgumentsList = new ObservableCollection<Arguments>();
+        ArgumentsList.CollectionChanged += OnArgumentsListChanged;
+        Degree = degree;
+        AvailableCoefficientsC = new List<double>();
+
+        for (int i = 1; i <= 5; i++)
         {
-            1 * Math.Pow(10, Degree - 1),
-            2 * Math.Pow(10, Degree - 1),
-            3 * Math.Pow(10, Degree - 1),
-            4 * Math.Pow(10, Degree - 1),
-            5 * Math.Pow(10, Degree - 1)
-        };
+            AvailableCoefficientsC.Add(i * Math.Pow(10, Degree - 1));
+        }
+
+        CoefficientC = AvailableCoefficientsC.FirstOrDefault();
     }
 
     #endregion
@@ -86,7 +87,7 @@ public class InternalFunction : INotifyPropertyChanged
 
     public bool AreCoefficientsSet()
     {
-        return A.HasValue && B.HasValue && C.HasValue;
+        return CoefficientA.HasValue && CoefficientB.HasValue && CoefficientC.HasValue;
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -94,20 +95,20 @@ public class InternalFunction : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private void OnCoordinateListChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    private void OnArgumentsListChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
-                if (e.NewItems != null)
+                if (e.NewItems == null)
                 {
-                    foreach (object item in e.NewItems)
-                    {
-                        if (item is not Arguments arguments)
-                        {
-                            continue;
-                        }
+                    break;
+                }
 
+                foreach (object item in e.NewItems)
+                {
+                    if (item is Arguments arguments)
+                    {
                         arguments.PropertyChanged += OnArgumentsChanged;
                     }
                 }
@@ -115,15 +116,15 @@ public class InternalFunction : INotifyPropertyChanged
                 break;
 
             case NotifyCollectionChangedAction.Remove:
-                if (e.OldItems != null)
+                if (e.OldItems == null)
                 {
-                    foreach (object item in e.OldItems)
-                    {
-                        if (item is not Arguments arguments)
-                        {
-                            continue;
-                        }
+                    break;
+                }
 
+                foreach (object item in e.OldItems)
+                {
+                    if (item is Arguments arguments)
+                    {
                         arguments.PropertyChanged -= OnArgumentsChanged;
                     }
                 }

@@ -11,9 +11,17 @@ using Services;
 
 public class MainViewModel : INotifyPropertyChanged
 {
+    #region Constants
+
+    private const int MIN_DEGREE = 1;
+    private const int MAX_DEGREE = 5;
+
+    #endregion
+
     #region Fields
 
     private readonly CalculationService _calculationService;
+
     private InternalFunction _selectedFunction;
 
     #endregion
@@ -31,7 +39,7 @@ public class MainViewModel : INotifyPropertyChanged
     }
 
     public ObservableCollection<InternalFunction> Functions { get; }
-
+    
     #endregion
 
     #region Events
@@ -47,9 +55,9 @@ public class MainViewModel : INotifyPropertyChanged
         _calculationService = new CalculationService();
         Functions = new ObservableCollection<InternalFunction>();
 
-        for (int i = 1; i < 6; i++)
+        for (int i = MIN_DEGREE; i <= MAX_DEGREE; i++)
         {
-            var function = new InternalFunction((FunctionDegree)i);
+            var function = new InternalFunction(i);
             function.PropertyChanged += OnArgumentChanged;
             Functions.Add(function);
         }

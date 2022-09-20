@@ -15,13 +15,13 @@ public class CalculationService
             return;
         }
 
-        foreach (Arguments arguments in function.CoordinatesList)
+        foreach (Arguments arguments in function.ArgumentsList)
         {
             if (arguments.X.HasValue && arguments.Y.HasValue)
             {
-                arguments.Result = function.A * Math.Pow(arguments.X.Value, function.Degree) +
-                                   function.B * Math.Pow(arguments.Y.Value, function.Degree - 1) +
-                                   function.C;
+                arguments.Result = function.CoefficientA * Math.Pow(arguments.X.Value, function.Degree) +
+                                   function.CoefficientB * Math.Pow(arguments.Y.Value, function.Degree - 1) +
+                                   function.CoefficientC;
             }
             else
             {

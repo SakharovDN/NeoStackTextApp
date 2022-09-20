@@ -15,15 +15,7 @@ public class EnumConverter : IValueConverter
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not int)
-        {
-            return DependencyProperty.UnsetValue;
-        }
-
-        // TODO: Convert for any enum CRUTCH
-        var enumValue = (FunctionDegree)value;
-
-        return GetDescription(enumValue);
+        return value is int ? GetDescription((FunctionDegree)value) : DependencyProperty.UnsetValue;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -31,7 +23,7 @@ public class EnumConverter : IValueConverter
         return value;
     }
 
-    public static string GetDescription(Enum en)
+    private static string GetDescription(Enum en)
     {
         Type type = en.GetType();
         MemberInfo[] memInfo = type.GetMember(en.ToString());
